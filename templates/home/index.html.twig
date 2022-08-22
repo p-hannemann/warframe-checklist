@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        {% for weapon in weapons %}
+            <div class="col-md-3 col-xl-2">
+                <div class="card mb-2">
+                    <img src="https://cdn.warframestat.us/img/{{ weapon.imageName }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ weapon.name }}</h5>
+                        <p class="card-text">{{ weapon.description }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ weapon.type }}</li>
+                        <li class="list-group-item">{{ weapon.category }}</li>
+                        <li class="list-group-item"><a href="{{ weapon.wikiaUrl }}">Wiki</a></li>
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

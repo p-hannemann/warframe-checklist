@@ -1,21 +1,35 @@
-version: '3'
+version: '3.9'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+  nginx:
+    build: ./.docker/nginx
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - ./:/var/www/project
+    ports:
+      -   "8080:80"
+    links:
+      -   php
+
+  mariadb:
+    image: mariadb:latest
+    #command: ["--default-authentication-plugin=mysql_native_password"]
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: warframe
+      MYSQL_DATABASE: warframe
+      MYSQL_USER: warframe
+      MYSQL_PASSWORD: warframe
+    volumes:
+      - db:/var/lib/mysql
+
+  php:
+    build: ./.docker/php
+    volumes:
+      - ./:/var/www/project
+      - ./.docker/php/ini:/usr/local/etc/php/custom.d
+    environment:
+      PHP_INI_SCAN_DIR: "/usr/local/etc/php/conf.d:/usr/local/etc/php/custom.d"
 
 volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+  db:

@@ -1,0 +1,3 @@
+app.update.weapons:
+  path: /weapons
+  controller: App\Controller\UpdateController::weapons
