@@ -10,11 +10,13 @@ $ npm install
 $ npm run dev
 ```
 
-Enter the php container
-``docker-compose exec php bash``
-
-run following command to build the database:
-
+Run the docker compose stack
 ```bash
+docker-compose up -d
+```
+
+Enter the php container and build database schema
+```bash
+docker-compose exec php bash
 ./bin/console doctrine:schema:update --force
 ```
