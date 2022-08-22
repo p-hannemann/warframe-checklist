@@ -5,3 +5,19 @@ index:
 app.update:
     prefix: /update
     resource: 'routes/update.yaml'
+
+app.register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+
+app.login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app.logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+app.userSettings:
+    prefix: /user-settings
+    resource: 'routes/userSettings.yaml'

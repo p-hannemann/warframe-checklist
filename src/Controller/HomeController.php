@@ -18,6 +18,7 @@ class HomeController extends AbstractController
 
     public function index(): Response
     {
+
         $weapons = $this->firearmRepository->findAll();
         $meleeWeapons = $this->meleeRepository->findAll();
         foreach ($meleeWeapons as $meleeWeapon) {
